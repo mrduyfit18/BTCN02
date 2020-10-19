@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-8 col-lg-10">
                         <input type="text" id="firstNumber" class="form-control"
-                        onclick= "resetNotification()" onfocusout="checkFirstForm()">
+                        onfocus= "resetNotification()" onfocusout="checkFirstForm()">
                     </div>
                 </div>
                 <div id="dataText" class="row">
@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-8 col-lg-10">
                         <input type="text" id="secondNumber" class="form-control"
-                        onclick= "resetNotification()" onfocusout="checkSecondForm()">
+                        onfocus= "resetNotification()" onfocusout="checkSecondForm()">
                     </div>
                 </div>
                 <div id="dataText" class="row">
@@ -93,8 +93,9 @@
 
         function checkValidData(){
             let result = true;
-            const data = document.getElementById("notification").innerHTML;
-            if(data != ""){
+            const data1 = Number(document.getElementById("firstNumber").value);
+            const data2 = Number(document.getElementById("secondNumber").value)
+            if(isNaN(data1) || isNaN(data2)){
                 result = false;
             }
             return result;
@@ -106,10 +107,12 @@
             if(sel=="0"){
                 const newNotification = "Chưa chọn phép tính!!";
                 document.getElementById("notification").innerHTML = newNotification;
+                document.getElementById("result").value="";
             }
             else if(isValid==false){
                 const newNotification = "Chưa nhập đủ hai số hợp lệ!!";
                 document.getElementById("notification").innerHTML = newNotification;
+                document.getElementById("result").value="";
             }
             else {
                 const sel = getSelection();
