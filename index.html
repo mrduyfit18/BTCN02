@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <title>Bé tập tính</title>
+</head>
+<body>
+    <div class="container page">
+        <h1>Bé tập tính</h1>
+        <div class="row action">
+            <div class="col-12 col-lg-9 "> 
+                <div id="dataText" class="row">
+                    <div class="col-8 col-lg-2 ">
+                       <label class="label" for="firstNumber">Số thứ nhất</label>
+                    </div>
+                    <div class="col-8 col-lg-10">
+                        <input type="text" id="firstNumber" class="form-control"
+                        onclick= "resetNotification()" onfocusout="checkFirstForm()">
+                    </div>
+                </div>
+                <div id="dataText" class="row">
+                    <div class="col-8 col-lg-2">
+                        <label class="label" for="secondNumber">Số thứ hai</label>
+                    </div>
+                    <div class="col-8 col-lg-10">
+                        <input type="text" id="secondNumber" class="form-control"
+                        onclick= "resetNotification()" onfocusout="checkSecondForm()">
+                    </div>
+                </div>
+                <div id="dataText" class="row">
+                    <div class="col-8 col-lg-2">
+                        <label class="label" for="result">Kêt quả</label>
+                    </div>
+                    <div class="col-8 col-lg-10">
+                        <input type="text" id="result" class="form-control" readonly>
+                    </div>
+                </div>
+                <div id="dataText" class="row">
+                    <div class="col-8 col-lg-2">
+                        <p class="label">Thông báo</p>
+                    </div>
+                    <div class="col-8 col-lg-10">
+                        <p id="notification"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="row selection">
+                    <div class="col-3 col-lg-4 ">
+                        <label class="form-check-label ">
+                            <input type="radio" class="form-check-input" name="option" value="1">Cộng
+                        </label>
+                    </div>
+                    <div class="col-3 col-lg-4">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="option" value="2">Trừ
+                        </label>
+                    </div>
+                </div>
+                <div class="row selection">    
+                    <div class="col-3 col-lg-4">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="option" value="3">Nhân
+                        </label>
+                    </div>
+                    <div class="col-3 col-lg-4">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="option" value="4">Chia
+                        </label>
+                    </div>   
+                </div>
+                <div class="row align-items-center">
+                    <button class="calculate" onclick="Calculate()">Tính</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function getSelection() { 
+            const radios = document.getElementsByName('option');
+            let sel = "0";
+            for (x of radios) {
+                if(x.checked==true){
+                    sel = x.value;
+                }
+            }
+            return sel;
+        }
+
+        function checkValidData(){
+            let result = true;
+            const data = document.getElementById("notification").innerHTML;
+            if(data != ""){
+                result = false;
+            }
+            return result;
+        }
+
+        function Calculate(){
+            const sel = getSelection();
+            const isValid = checkValidData();
+            if(sel=="0"){
+                const newNotification = "Chưa chọn phép tính!!";
+                document.getElementById("notification").innerHTML = newNotification;
+            }
+            else if(isValid==false){
+                const newNotification = "Chưa nhập đủ hai số hợp lệ!!";
+                document.getElementById("notification").innerHTML = newNotification;
+            }
+            else {
+                const sel = getSelection();
+                const firstNum = Number(document.getElementById("firstNumber").value);
+                const secondNum = Number(document.getElementById("secondNumber").value);
+                let result = 0.0;
+                switch(sel){
+                    case "1":
+                        result = firstNum + secondNum;
+                        break;
+                    case "2":
+                        result = firstNum - secondNum;
+                        break;
+                    case "3":
+                        result = firstNum * secondNum;
+                        break;
+                    case "4":
+                        result = firstNum / secondNum;
+                }
+                document.getElementById("result").value = result;
+            }
+        }
+
+        function checkFirstForm(){
+            const data = document.getElementById("firstNumber").value;
+            const num = Number(data);
+            if(isNaN(num) == true){
+                const newNotification = "Số thứ nhất chưa được nhập hoặc nhập chưa chính xác!!";
+                document.getElementById("notification").innerHTML = newNotification;
+            }
+        }
+
+        function checkSecondForm(){
+            const data = document.getElementById("secondNumber").value;
+            const num = Number(data);
+            if(isNaN(num) == true){
+                const newNotification = "Số thứ hai chưa được nhập hoặc nhập chưa chính xác!!";
+                document.getElementById("notification").innerHTML = newNotification;
+            }
+        }
+
+        function resetNotification(){
+            document.getElementById("notification").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
